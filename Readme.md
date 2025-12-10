@@ -7,7 +7,6 @@
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
 - [Model Architecture](#model-architecture)
-- [Evaluation Metrics](#evaluation-metrics)
 - [Results](#results)
 - [Citation](#citation)
 
