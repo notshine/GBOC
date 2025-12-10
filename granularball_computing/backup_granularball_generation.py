@@ -47,7 +47,7 @@ def func_granularball_computing(data, metric="max", visual=False, save_path="", 
     k1 = int(np.sqrt(len(data)))
     indices = list(range(np.shape(data)[0]))
 
-    gb_list_temp = divide_gb_k(data, indices, k1) # 先粗划分为根号n个粒球
+    gb_list_temp = divide_gb_k(data, indices, k1) # First, roughly divide it into √n spheres.
 
     centers, radius = compute_ball_info(data, gb_list_temp, metric=metric)
 
@@ -105,7 +105,7 @@ def get_dm_sparse(data, list_gb, metric="max"):
     return sparsity
 
 def division_central_consistency(data, gb_list, gb_list_not, metric="max"):
-    ''' 中心一致性划分
+    ''' Central consistency division
     Args:
         gb_list:
         gb_list_not:

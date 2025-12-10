@@ -102,13 +102,13 @@ def spilt_ball_2(data, gb_list):
     kmeans.fit(data)
     labels = kmeans.labels_
     
-    # 确保返回的是整数数组
+    # Ensure the returned arrays are of integer type
     cluster1 = np.array([gb_list[i] for i in range(n) if labels[i] == 0], dtype=np.int64)
     cluster2 = np.array([gb_list[i] for i in range(n) if labels[i] == 1], dtype=np.int64)
     
-    # 处理可能的空数组情况
+    # Handle empty cluster cases
     if cluster1.size == 0 or cluster2.size == 0:
-        # 如果其中一个簇为空，则不分割
+        # If one of the clusters is empty, do not split and return the original granular ball        
         return gb_list, gb_list
         
     return cluster1, cluster2
@@ -139,34 +139,34 @@ def division_2_2(data, gb_list, n):
     gb_list_new_2 = []
     for gb in gb_list:
         if(len(gb) >=20):
-            # 确保gb是整数类型
+            # Ensure gb is of integer type
             gb = np.asarray(gb, dtype=np.int64)
             
             ball_1, ball_2 = spilt_ball_2(data[gb], gb)
             
-            # 确保ball_1和ball_2是整数类型
+            # Ensure ball_1 and ball_2 are of integer type
             if isinstance(ball_1, np.ndarray) and ball_1.size > 0:
                 ball_1 = np.asarray(ball_1, dtype=np.int64)
             else:
-                # 处理空数组或无效情况
+                # Handle empty cluster cases
                 gb_list_new_2.append(gb)
                 continue
                 
             if isinstance(ball_2, np.ndarray) and ball_2.size > 0:
                 ball_2 = np.asarray(ball_2, dtype=np.int64)
             else:
-                # 处理空数组或无效情况
+                # Handle empty cluster cases
                 gb_list_new_2.append(gb)
                 continue
                 
             density_parent = get_density_volume(data[gb], gb)
             
-            # 添加类型和边界检查
+            # Add type and boundary checks for ball_1 and ball_2
             try:
                 density_child_1 = get_density_volume(data[ball_1], ball_1)
                 density_child_2 = get_density_volume(data[ball_2], ball_2)
             except IndexError:
-                # 处理索引错误
+                # Handle empty cluster cases
                 gb_list_new_2.append(gb)
                 continue
                 
@@ -229,7 +229,7 @@ def func_granularball_computing(data, visual=False, save_path="", labels=None):
 
     while 1:
         ball_number_old = len(gb_list_temp)
-        gb_list_temp = division_2_2(data, gb_list_temp, data_num) #质量轮
+        gb_list_temp = division_2_2(data, gb_list_temp, data_num) 
         ball_number_new = len(gb_list_temp)
         if ball_number_new == ball_number_old:
             break

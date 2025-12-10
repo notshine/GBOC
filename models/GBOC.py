@@ -90,7 +90,7 @@ class GBOC(BaseDetector):
         self.validation_size = validation_size
         self.hidden_dim = hidden_dim
         self.num_layers = num_layers
-        self.alpha = alpha         # 保存 alpha 参数
+        self.alpha = alpha        
 
         self.model = GBOC_AD_Model(batch_size=self.batch_size, feats=self.feats, win_size=self.win_size, hidden_dim=self.hidden_dim, num_layers=self.num_layers).to(self.device)
 
@@ -137,9 +137,9 @@ class GBOC(BaseDetector):
         best_val_loss = float('inf')
         best_model_state = None
         
-        # 外层循环（总epochs）
+        # Outer loop (total epochs)
         for epoch in range(1, self.epochs + 1):
-            # 每个epoch重置早停计数器
+            # Reset early stopping counter for each epoch
             patience_counter = 0
             epoch_best_val_loss = float('inf')
             
@@ -171,7 +171,7 @@ class GBOC(BaseDetector):
             centers = trainset.gb_centers
             centers = torch.tensor(centers).to(self.device)
 
-            # 内层循环（每个epoch的微调）
+            # Inner loop (fine-tuning for each epoch)
             for epoch2 in range(1, 11):
                 self.model.train(mode=True)
                 avg_loss = 0
@@ -198,21 +198,21 @@ class GBOC(BaseDetector):
                     z, x_bar = self.model(x, elem)
                     # loss = (1 / epoch) * self.criterion(z[0], elem) + (1 - 1 / epoch) * self.criterion(z[1], elem)
                     
-                    # 训练阶段
-                    loss1 = self.criterion(x_bar, elem)  # 重构损失
+                    # Training stage
+                    loss1 = self.criterion(x_bar, elem)  # Reconstruction loss
                     feas = self.model.obtain_features(x)
                     """
                     # print(np.shape(z), self.hidden_dim, N_balls)
                     """
-                    # 使用交叉熵替代MSE 
+                    # Use cross entropy instead of MSE
                     # output = self.dis_linear(feas)
                     # loss2 = self.discrimination_criterion(output, gb_y) 
                     
-                    # 用MSE替代交叉熵
+                    # Use MSE instead of cross entropy
                     loss2 = F.mse_loss(feas, centers[gb_y])
                     # loss = loss1
                     # loss = loss2
-                    a = self.alpha  # 使用实例变量替代固定值
+                    a = self.alpha  # Use instance variable instead of fixed value
                     loss = a * loss1 + (1 - a) * loss2
                     # raise Exception('>>>>', np.shape(feas), np.shape())
         
@@ -253,7 +253,7 @@ class GBOC(BaseDetector):
 
                             # =====================================================
                             # loss = (1 / epoch) * self.criterion(z[0], elem) + (1 - 1 / epoch) * self.criterion(z[1], elem)
-                            # 用交叉熵替代MSE
+                            # Use cross entropy instead of MSE
                             loss1 = self.criterion(x_bar, elem)
                             """
                             output = self.dis_linear(z)
@@ -262,7 +262,7 @@ class GBOC(BaseDetector):
 
                             # loss = loss2
                             
-                            # 验证阶段
+                            # Validation stage
                             feas = self.model.obtain_features(x)
                             loss2 = F.mse_loss(feas, centers[gb_y])
                             # loss = loss1
@@ -282,31 +282,31 @@ class GBOC(BaseDetector):
                 else:
                     avg_loss = avg_loss / len(train_loader)
                     
-                # 早停检查，但只针对当前epoch的微调循环
+                # Early stopping check, but only for the current epoch's fine-tuning loop
                 if avg_loss < epoch_best_val_loss:
                     epoch_best_val_loss = avg_loss
                     patience_counter = 0
-                    # 保存当前epoch的最佳模型状态
+                    # Save the best model state for the current epoch
                     epoch_best_model = copy.deepcopy(self.model.state_dict())
                 else:
                     patience_counter += 1
                     print(f"EarlyStopping counter: {patience_counter} out of {self.early_stopping.patience}")
                     
-                # 如果达到早停条件，只结束当前epoch的微调
+                # If the early stopping condition is met, only end the current epoch's fine-tuning loop
                 if patience_counter >= self.early_stopping.patience:
                     print(f"   Early stopping for epoch {epoch} <<<")
-                    # 恢复到当前epoch的最佳模型
+                    # Restore to the best model state for the current epoch
                     if epoch_best_model:
                         self.model.load_state_dict(epoch_best_model)
                     break
             
-            # 更新全局最佳模型
+            # Update the global best model if the current epoch's best model is better
             if epoch_best_val_loss < best_val_loss:
                 best_val_loss = epoch_best_val_loss
                 best_model_state = copy.deepcopy(self.model.state_dict())
                 print(f"New global best model found with validation loss: {best_val_loss:.6f}")
         
-        # 训练结束后，加载全局最佳模型
+        # After training, load the global best model
         if best_model_state:
             print(f"Loading best model with validation loss: {best_val_loss:.6f}")
             self.model.load_state_dict(best_model_state)

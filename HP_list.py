@@ -10,7 +10,7 @@ Multi_algo_HP_dict = {
 
 
 Optimal_Multi_algo_HP_dict = {
-    'GBOC': {'win_size': 10, 'lr': 0.0001, 'hidden_dim': 32, 'num_layers': 3, 'alpha': 0.9, 'epochs': 30},
+    'GBOC': {'win_size': 10, 'lr': 0.0001, 'hidden_dim': 32, 'num_layers': 3, 'alpha': 0.9, 'epochs': 50},
 }
 
 
@@ -25,5 +25,5 @@ Uni_algo_HP_dict = {
 }
 
 Optimal_Uni_algo_HP_dict = {
-    'GBOC': {'win_size':5, 'lr': 0.0001, 'hidden_dim': 32, 'num_layers': 3, 'alpha': 0.9, 'epochs': 30},
+    'GBOC': {'win_size':5, 'lr': 0.0001, 'hidden_dim': 32, 'num_layers': 3, 'alpha': 0.9, 'epochs': 50},
 }
