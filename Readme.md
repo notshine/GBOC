@@ -112,7 +112,7 @@ Optimal_Uni_algo_HP_dict = {
 
 ### GBOC Architecture Overview
 
-![MODEL](E:\AAAI_GBOC\MODEL.png)
+![MODEL](E:\GBOC_code\Figures\MODEL.png)
 
 ## 📊 Results
 
