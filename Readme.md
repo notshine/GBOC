@@ -115,14 +115,6 @@ Optimal_Uni_algo_HP_dict = {
 
 ![MODEL](E:\AAAI_GBOC\MODEL.png)
 
-## 📈 Evaluation Metrics
-
-The model reports the following metrics:
-
-- **VUS-PR**: Volume Under Surface (Precision-Recall)
-- **VUS-ROC**: Volume Under Surface (ROC)
-- **Affiliation-F**: Affiliation-based F1 score
-
 ## 📊 Results
 
 Results are automatically saved to:
@@ -158,56 +150,16 @@ GBOC/
     └── *.csv                       # Time series data files
 ```
 
-## 🎯 Usage Examples
-
-### Example 1: Quick Test
-
-```bash
-python main.py --AD_Name GBOC --filename 001_NAB_id_1_Facility_tr_1007_1st_2014
-```
-
-### Example 2: Fast Training (10 epochs)
-
-```bash
-python main.py --AD_Name GBOC \
-    --filename 001_NAB_id_1_Facility_tr_1007_1st_2014 \
-    --epochs 10
-```
-
-### Example 3: High-Capacity Model
-
-```bash
-python main.py --AD_Name GBOC \
-    --filename 001_NAB_id_1_Facility_tr_1007_1st_2014 \
-    --hidden_dim 128 \
-    --num_layers 4 \
-    --epochs 50
-```
-
-### Example 4: Tuning Loss Balance
-
-```bash
-# More weight on reconstruction
-python main.py --AD_Name GBOC \
-    --filename 001_NAB_id_1_Facility_tr_1007_1st_2014 \
-    --alpha 0.95
-
-# More weight on gb
-python main.py --AD_Name GBOC \
-    --filename 001_NAB_id_1_Facility_tr_1007_1st_2014 \
-    --alpha 0.5
-```
-
 ## 📝 Citation
 
 If you use this code in your research, please cite:
 
 ```bibtex
-@article{GBOC2026,
-  title={GBOC: Granular Ball-Based One-Class Anomaly Detection for Time Series},
-  author={Your Name},
-  journal={Your Journal/Conference},
-  year={2024}
+@article{GBOC,
+  title={Finding Time Series Anomalies using Granular-ball Vector Data Description},
+  author={Shen, Lifeng and Peng, Liang and Liu, Ruiwen and Xia, Shuyin and Liu, Yi},
+  journal={arXiv preprint arXiv:2511.12147},
+  year={2025}
 }
 ```
 
@@ -217,14 +169,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-For questions or issues, please open an issue on GitHub or contact:
+For questions or issues, please contact:
 
-- Author: [notshine](https://github.com/notshine)
-- Repository: [https://github.com/notshine/GBOC](https://github.com/notshine/GBOC)
+- Liang Peng : l1angpeng@foxmail.com.
 
 ## 🙏 Acknowledgments
 
+We appreciate the following github repos a lot for their valuable code base:
 
+- https://github.com/TheDatumOrg/TSB-AD
 
 ---
 
