@@ -6,7 +6,6 @@
 - [Dataset](#dataset)
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
-- [Model Architecture](#model-architecture)
 - [Results](#results)
 - [Citation](#citation)
 
@@ -107,12 +106,6 @@ Optimal_Uni_algo_HP_dict = {
 | `--save_dir`   | str   | eval     | Directory to save results                |
 
 **Parameter Priority**: Command-line arguments > HP_list.py configuration
-
-## 🏗️ Model Architecture
-
-### GBOC Architecture Overview
-
-![MODEL](E:\GBOC_code\Figures\MODEL.png)
 
 ## 📊 Results
 
