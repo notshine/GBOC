@@ -147,11 +147,11 @@ GBOC/
 If you use this code in your research, please cite:
 
 ```bibtex
-@article{GBOC,
-  title={Finding Time Series Anomalies using Granular-ball Vector Data Description},
+@inproceedings{GBOC,
+  title={Finding Time Series Anomalies Using Granular-Ball Vector Data Description},
   author={Shen, Lifeng and Peng, Liang and Liu, Ruiwen and Xia, Shuyin and Liu, Yi},
-  journal={arXiv preprint arXiv:2511.12147},
-  year={2025}
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  year={2026}
 }
 ```
 
