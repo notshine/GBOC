@@ -1,4 +1,4 @@
-# Finding Time Series Anomalies using Granular-ball Vector Data Description
+# [AAAI 2026] Finding Time Series Anomalies Using Granular-Ball Vector Data Description
 
 ## 📋 Table of Contents
 
