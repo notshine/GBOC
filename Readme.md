@@ -151,6 +151,9 @@ If you use this code in your research, please cite:
   title={Finding Time Series Anomalies Using Granular-Ball Vector Data Description},
   author={Shen, Lifeng and Peng, Liang and Liu, Ruiwen and Xia, Shuyin and Liu, Yi},
   booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={40},
+  number={30},
+  pages={25295--25303},
   year={2026}
 }
 ```
