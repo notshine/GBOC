@@ -67,6 +67,32 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
+
+def append_result_csv(args, evaluation_result, csv_path='result.csv'):
+    dataset_name = os.path.splitext(os.path.basename(args.filename))[0]
+    row = {
+        'dataset': dataset_name,
+        'win_size': args.win_size,
+        'lr': args.lr,
+        'hidden_dim': args.hidden_dim,
+        'num_layers': args.num_layers,
+        'alpha': args.alpha,
+        'epochs': args.epochs,
+    }
+    row.update(evaluation_result)
+
+    new_df = pd.DataFrame([row])
+    if os.path.exists(csv_path) and os.path.getsize(csv_path) > 0:
+        old_df = pd.read_csv(csv_path)
+        all_cols = list(dict.fromkeys(list(old_df.columns) + list(new_df.columns)))
+        old_df = old_df.reindex(columns=all_cols)
+        new_df = new_df.reindex(columns=all_cols)
+        result_df = pd.concat([old_df, new_df], ignore_index=True)
+    else:
+        result_df = new_df
+
+    result_df.to_csv(csv_path, index=False)
+
 def main(args):
     
     data, label = load_dataset(args)
@@ -155,8 +181,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--AD_Name', type=str, default='GBOC', help='anomaly detection algorithm name')
-    parser.add_argument('--data_direc', type=str, default='TSB-AD-U')
-    parser.add_argument('--filename', type=str, default='267_IOPS_id_8_WebService_tr_1534_1st_1882')
+    parser.add_argument('--data_direc', type=str, default='TSB-AD-M')
+    parser.add_argument('--filename', type=str, default='166_SMAP_id_23_Sensor_tr_1113_1st_1890')
     parser.add_argument('--score_dir', type=str, help='path to save the anomaly score', default='score')
     parser.add_argument('--save_dir', type=str, help='path to save the evaluation result', default='eval')
     parser.add_argument('--save', type=bool, help='whether to save the evaluation result',  default=True)
@@ -202,6 +228,10 @@ if __name__ == '__main__':
         write_csv = []
 
     evaluation_result, list_w, run_time = main(args)
+
+    # Save a run summary: dataset name + 6 model parameters + metric results.
+    append_result_csv(args, evaluation_result, csv_path='result.csv')
+
     list_w.insert(0, run_time)
     list_w.insert(0, args.filename)
     write_csv.append(list_w)
